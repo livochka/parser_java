@@ -6,9 +6,7 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 import java.io.IOException;
-import java.net.URI;
 import java.net.URISyntaxException;
-import java.util.Arrays;
 import java.util.Scanner;
 
 
@@ -30,7 +28,7 @@ class Main{
     }
 
 
-    public static City[] getCities() throws IOException, URISyntaxException, UnirestException{
+    public static City[] getCities() throws IOException{
         Document doc = Jsoup.connect("https://uk.wikipedia.org/wiki/%D0%9C%D1%96%D1%81%D1%82%D0%B0_%D0%A3%D0%BA%D1%80%D0%B0%D1%97%D0%BD%D0%B8_(%D0%B7%D0%B0_%D0%B0%D0%BB%D1%84%D0%B0%D0%B2%D1%96%D1%82%D0%BE%D0%BC)").get();
         Elements cities = doc.select("table tr");
         City[] ukrainianCities = new City[cities.size() - 1];
@@ -38,7 +36,6 @@ class Main{
         for (Element city : cities) {
             City newCity = City.parse(city);
             if (newCity != null){
-                //System.out.println(newCity.getWeather());
                 ukrainianCities[counter] = newCity;
                 counter++;
             }
