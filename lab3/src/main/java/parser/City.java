@@ -1,19 +1,9 @@
 package parser;
 
 import java.io.IOException;
-import java.net.URI;
-
-import com.mashape.unirest.http.HttpResponse;
-import com.mashape.unirest.http.JsonNode;
-import com.mashape.unirest.http.Unirest;
 import com.mashape.unirest.http.exceptions.UnirestException;
-import org.json.JSONException;
-import org.json.JSONObject;
-import org.jsoup.Jsoup;
-import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -76,22 +66,7 @@ class City{
     }
 
     public String getWeather() throws IOException, UnirestException{
-        String weather_url = "http://api.apixu.com/v1/current.json?key=f6da3a783d34446f8f4120423180410&q=" +
-                Float.toString(coordinates.get_cor("lon")) + "," + Float.toString(coordinates.get_cor("lat"));
-        HttpResponse<JsonNode> jsonResponse = Unirest.post(weather_url).asJson();
-        JSONObject myObj = jsonResponse.getBody().getObject();
-        //System.out.println(weather_url);
-        String weather;
-        try {
-            weather = "Температура " + Double.toString(myObj.getJSONObject("current").getDouble("temp_c")) +
-                    ", " + myObj.getJSONObject("current").getJSONObject("condition").getString("text") +
-                    "\nШвидкість вітру - " + Double.toString(myObj.getJSONObject("current").getDouble("wind_kph")) +
-                    " км/год, а вологість - " + Integer.toString(myObj.getJSONObject("current").getInt("humidity")) +
-                    "%";
-        }
-        catch (JSONException e){
-            weather = "Не даний момент немає інформації про погоду у даному місті";
-        }
+        String weather = Weather.generateWeather(this);
         return weather;
     }
 }
