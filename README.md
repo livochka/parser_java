@@ -1,2 +1,2 @@
-# Parsing of wikipedia page
-# Getting the weather using API in input city
+Parsing of wikipedia page
+Getting the weather using API in inputed city
